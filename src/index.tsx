@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect, useRef, useState } from 'react'
-import * as ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client';
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Html, OrbitControls } from '@react-three/drei'
 import './styles.css'
@@ -148,14 +148,15 @@ const Avatar = () => {
   )
 }
 
-ReactDOM.render(
+
+const container = document.getElementById('root');
+const root = createRoot(container); // createRoot(container!) if you use TypeScript
+root.render( 
   <Canvas camera={{ position: [0, 1.3, 0.6] }}>
-    <ambientLight intensity={0.65} />
-    <spotLight position={[0, 2, -1]} intensity={0.4} />
-    <Suspense fallback={null}>
-      <Avatar />
-    </Suspense>
-    <OrbitControls target={[0, 1.3, 0]} />
-  </Canvas>,
-  document.getElementById('root')
-)
+  <ambientLight intensity={0.65} />
+  <spotLight position={[0, 2, -1]} intensity={0.4} />
+  <Suspense fallback={null}>
+    <Avatar />
+  </Suspense>
+  <OrbitControls target={[0, 1.3, 0]} />
+</Canvas>);
